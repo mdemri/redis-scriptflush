@@ -4,8 +4,9 @@ const _ = require('lodash');
 const debugStrs = ''
 const connStrs = process.env.CONN_STRS || debugStrs;
 
-
-new Redis(debugStrs).script('FLUSH')
+const ConnectionStrings = connStrs.split(',');
+const arr = _.map(ConnectionStrings, x => new Redis(x));
+Promise.all(_.map(arr, x => x.script('FLUSH')))
     .then((x) => {
         console.log(x);
         process.exit(0);

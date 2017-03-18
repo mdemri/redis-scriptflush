@@ -6,4 +6,4 @@ const connStrs = process.env.CONN_STRS || debugStrs;
 
 const ConnectionStrings = connStrs.split(',');
 
-Promise.all(_.map(ConnectionStrings, x => new Redis().script('FLUSH'))).then(x => console.log(x));
+Promise.all(_.map(ConnectionStrings, x => new Redis(x).script('FLUSH'))).then(x => console.log(x));
